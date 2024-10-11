@@ -5,15 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Frontend",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/src/frontend",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run-script", "dev"],
-      "console": "integratedTerminal"
-    },
-    {
         "name": "Backend",
         "type": "debugpy",
         "request": "launch",
@@ -21,13 +12,6 @@
         "module": "uvicorn",
         "args": ["rag_app:create_app", "--factory", "--reload"],
         "justMyCode": false
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Frontend & Backend",
-      "configurations": ["Frontend", "Backend"],
-      "stopAll": true
     }
   ]
 }
