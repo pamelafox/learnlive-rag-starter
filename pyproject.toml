@@ -1,0 +1,27 @@
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+lint.select = ["E", "F", "I", "UP"]
+lint.ignore = ["D203"]
+lint.isort.known-first-party = ["rag_app"]
+
+[tool.mypy]
+check_untyped_defs = true
+python_version = 3.12
+exclude = [".venv/*"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+pythonpath = ['src/backend']
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[[tool.mypy.overrides]]
+module = [
+    "pgvector.*",
+    "evaltools.*"
+]
+ignore_missing_imports = true
+
+[tool.coverage.report]
+show_missing = true

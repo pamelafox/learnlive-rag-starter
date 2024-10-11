@@ -1,0 +1,39 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "local",
+            "database": "postgres",
+            "username": "admin",
+            "password": "postgres"
+        },
+        {
+            "name": "Azure database",
+            "driver": "PostgreSQL",
+            "server": "<HOSTNAME>.postgres.database.azure.com",
+            "port": 5432,
+            "database": "postgres",
+            "username": "<USERNAME>",
+            "askForPassword": true,
+            "pgOptions": {
+                "ssl": true
+            }
+        }
+    ],
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "files.exclude": {
+        ".ruff_cache": true,
+        ".pytest_cache": true,
+        "__pycache__": true,
+        "htmlcov": true,
+        ".mypy_cache": true,
+        ".coverage": true
+    }
+}
