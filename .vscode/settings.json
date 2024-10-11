@@ -28,6 +28,7 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+    "python.analysis.extraPaths": ["src/backend"], 
     "files.exclude": {
         ".ruff_cache": true,
         ".pytest_cache": true,
