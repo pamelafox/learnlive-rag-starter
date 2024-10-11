@@ -1,14 +1,32 @@
 import os
 
 import openai
-import rich
 from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from typing import List
 
 from postgres_searcher import PostgresSearcher
 from rag_flow import RAGFlow
 
+app = FastAPI()
 
-async def do_rag(question: str):
+
+class Message(BaseModel):
+    content: str
+    role: str
+
+
+
+class QueryRequest(BaseModel):
+    messages: List[Message] = Field(
+        ...,
+        example=[
+            {"content": "Best shoe for hiking?", "role": "user"}
+        ]
+    )
+
+async def do_rag(messages: list[dict[str, str]]):
     load_dotenv()
     openai_client = openai.AsyncOpenAI(
         base_url="https://models.inference.ai.azure.com", api_key=os.getenv("GITHUB_TOKEN")
@@ -24,13 +42,21 @@ async def do_rag(question: str):
     )
     rag_flow = RAGFlow(searcher=searcher, openai_chat_client=openai_client, chat_model="gpt-4o-mini")
 
-    response = await rag_flow.answer(original_user_query=question, past_messages=[])
+    response = await rag_flow.answer(original_user_query=messages[0]["content"], past_messages=messages)
     return response
 
 
-if __name__ == "__main__":
-    import asyncio
+@app.post("/chat")
+async def query(request: QueryRequest):
+    try:
+        messages = [message.model_dump() for message in request.messages]
+        response = await do_rag(messages)
+        return response
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-    loop = asyncio.get_event_loop()
-    response = loop.run_until_complete(do_rag("Any climbing gear?"))
-    rich.print(response)
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)
