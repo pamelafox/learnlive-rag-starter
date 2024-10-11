@@ -10,8 +10,8 @@
     python ./src/rag_app/setup_postgres_seeddata.py
     ```
 
-3. Run the FastAPI backend (with hot reloading). This should be run from the root of the project:
+3. Run the sample flow:
 
-    ```shell
-    python -m uvicorn rag_app:create_app --factory --reload
+    ```bash
+    python ./src/rag_app/main.py
     ```

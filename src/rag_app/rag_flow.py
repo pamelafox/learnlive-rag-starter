@@ -6,12 +6,6 @@ from openai import AsyncAzureOpenAI, AsyncOpenAI
 from openai.types.chat import ChatCompletion, ChatCompletionMessageParam
 from openai_messages_token_helper import build_messages, get_token_limit
 
-from rag_app.api_models import (
-    AIChatRoles,
-    Message,
-    RAGContext,
-    RetrievalResponse,
-)
 from rag_app.postgres_searcher import PostgresSearcher
 from rag_app.query_rewriter import build_search_function, extract_search_arguments
 
@@ -30,7 +24,7 @@ class RAGFlow:
         self.chat_model = chat_model
         self.chat_token_limit = get_token_limit(chat_model, default_to_minimum=True)
 
-    async def answer(self, original_user_query: str, past_messages: list[dict]) -> RetrievalResponse:
+    async def answer(self, original_user_query: str, past_messages: list[dict]) -> dict:
         # Step 1: Query re-writing using OpenAI function calling
         tools = build_search_function()
         tool_choice: Final = "auto"
@@ -90,9 +84,10 @@ class RAGFlow:
             stream=False,
         )
 
-        return RetrievalResponse(
-            message=Message(
-                content=str(chat_completion_response.choices[0].message.content), role=AIChatRoles.ASSISTANT
-            ),
-            context=RAGContext(data_points={item.id: item.to_dict() for item in results}),
-        )
+        return {
+            "message": {
+                "content": chat_completion_response.choices[0].message.content,
+                "role": "assistant",
+            },
+            "context": {"data_points": {item.id: item.to_dict() for item in results}},
+        }
