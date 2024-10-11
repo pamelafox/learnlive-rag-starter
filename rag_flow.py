@@ -6,8 +6,8 @@ from openai import AsyncAzureOpenAI, AsyncOpenAI
 from openai.types.chat import ChatCompletion, ChatCompletionMessageParam
 from openai_messages_token_helper import build_messages, get_token_limit
 
-from rag_app.postgres_searcher import PostgresSearcher
-from rag_app.query_rewriter import build_search_function, extract_search_arguments
+from postgres_searcher import PostgresSearcher
+from query_rewriter import build_search_function, extract_search_arguments
 
 
 class RAGFlow:

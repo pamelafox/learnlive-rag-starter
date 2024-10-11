@@ -1,6 +1,0 @@
-ruff
-mypy
-types-requests
-pre-commit
-pip-tools
-pip-compile-cross-platform

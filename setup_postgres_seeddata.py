@@ -9,11 +9,11 @@ from dotenv import load_dotenv
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import async_sessionmaker
 
-from rag_app.postgres_engine import (
+from postgres_engine import (
     create_postgres_engine_from_args,
     create_postgres_engine_from_env,
 )
-from rag_app.postgres_models import Item
+from postgres_models import Item
 
 logger = logging.getLogger("ragapp")
 

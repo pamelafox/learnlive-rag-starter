@@ -6,8 +6,8 @@ import os
 import openai
 from dotenv import load_dotenv
 
-from rag_app.embeddings import compute_text_embedding
-from rag_app.postgres_models import Item
+from embeddings import compute_text_embedding
+from postgres_models import Item
 
 logger = logging.getLogger("ragapp")
 

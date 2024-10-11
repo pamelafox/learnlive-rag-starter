@@ -4,8 +4,8 @@ import openai
 import rich
 from dotenv import load_dotenv
 
-from rag_app.postgres_searcher import PostgresSearcher
-from rag_app.rag_flow import RAGFlow
+from postgres_searcher import PostgresSearcher
+from rag_flow import RAGFlow
 
 
 async def do_rag(question: str):

@@ -3,8 +3,8 @@ from pgvector.utils import to_db
 from sqlalchemy import Float, Integer, column, select, text
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-from rag_app.embeddings import compute_text_embedding
-from rag_app.postgres_models import Item
+from embeddings import compute_text_embedding
+from postgres_models import Item
 
 
 class PostgresSearcher:
